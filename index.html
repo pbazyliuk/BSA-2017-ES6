@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <script>
+    'use strict';
+class Fighter {
+  constructor(name="User", power = 1, health = 50) {
+    this.name = name; 
+    this.power = power;
+    this.health = health;
+  }
+  setDamage(damage) {      
+    this.health = this.health - damage;
+    console.log(`${this.name} health: ${this.health}`);
+  }
+  hit(enemy,point) { 
+    let damage = point * this.power;        
+    enemy.setDamage(damage);
+  }
+}
+class ImprovedFighter extends Fighter {
+  doubleHit(enemy,point) {
+    super.hit(enemy,point *= 2);
+  }
+}
+let fight = (fighter, improvedFighter, ...points) => {
+  let point = points;
+  if(fighter.health > 0 && improvedFighter.health > 0) {
+    fighter.hit(improvedFighter, randomPointCalc(point));
+    improvedFighter.hit(fighter, randomPointCalc(point));
+  }
+  
+  if(fighter.health <= 0 || improvedFighter.health <= 0) {
+    if(fighter.health <= 0) {
+      console.log(fighter.name + " is dead!");
+    }
+    if(improvedFighter.health <= 0) {
+      console.log(improvedFighter.name + " is dead!");
+    }
+  }
+}
+let randomPointCalc = (point) => {
+  let randomNumber = Math.round(Math.random()*(point.length-1));
+  let randomPoint = point[randomNumber];
+  return  randomPoint;
+  console.log(randomPoint);
+}
+let vasya = new Fighter("Вася",10,50);
+console.log(vasya);
+let ivan = new ImprovedFighter("Іван",10,50);
+console.log(ivan);
+let user = new Fighter();
+console.log(user);
+console.log(`Запуск через функцію fight(vasya,ivan, 1,2,3)`);
+fight(vasya,ivan, 1,2,3);
+  </script>
+</head>
+<body>
+  
+</body>
+</html>
